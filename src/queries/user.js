@@ -1,16 +1,16 @@
-import { GraphQLString, GraphQLList, GraphQLNonNull } from 'graphql';
+import { GraphQLInt, GraphQLString, GraphQLList, GraphQLNonNull } from 'graphql';
 import UserType from '../types/user';
 
 const usersData = [
-  { id: '1', name: 'John Doe', email: 'jdoe@gmail.com', age: 35 },
-  { id: '2', name: 'Steve Smith', email: 'steve@gmail.com', age: 25 },
-  { id: '3', name: 'Sara Williams', email: 'sara@gmail.com', age: 32 },
+  { id: 1, username: 'johnd', email: 'jdoe@gmail.com' },
+  { id: 2, username: 'steves', email: 'steve@gmail.com' },
+  { id: 3, username: 'saraw', email: 'sara@gmail.com' },
 ];
 
 export const user = {
   type: UserType,
   args: {
-    id: { type: new GraphQLNonNull(GraphQLString) },
+    id: { type: new GraphQLNonNull(GraphQLInt) },
   },
   resolve: (root, args) => {
     for (let i = 0; i < usersData.length; i += 1) {

@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
+import { database, username, password } from '../config/config.json';
 
-const sequelize = new Sequelize('graphql_server_db', 'graphql_server_admin', 'qwerty', {
+const sequelize = new Sequelize(database, username, password, {
   host: 'localhost',
   dialect: 'postgres',
 });

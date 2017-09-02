@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "battle_rap_fix_admin",
+    "password": "6fv6@Ugts8v",
+    "database": "battle_rap_fix_dev",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}

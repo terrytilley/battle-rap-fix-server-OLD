@@ -8,9 +8,8 @@ import {
 export default new GraphQLObjectType({
   name: 'User',
   fields: () => ({
-    id: { type: new GraphQLNonNull(GraphQLString) },
-    name: { type: new GraphQLNonNull(GraphQLString) },
+    id: { type: new GraphQLNonNull(GraphQLInt) },
     email: { type: new GraphQLNonNull(GraphQLString) },
-    age: { type: GraphQLInt },
+    username: { type: new GraphQLNonNull(GraphQLString) },
   }),
 });
