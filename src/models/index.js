@@ -1,10 +1,9 @@
 import Sequelize from 'sequelize';
-import { database, username, password } from '../config/config.json';
 
-const sequelize = new Sequelize(database, username, password, {
-  host: 'localhost',
-  dialect: 'postgres',
-});
+const env = process.env.NODE_ENV || 'development';
+const config = require('../config/config.json')[env];
+
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 const db = {
   User: sequelize.import('./user'),
