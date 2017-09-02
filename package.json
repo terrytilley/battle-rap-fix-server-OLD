@@ -1,0 +1,26 @@
+{
+  "name": "battle-rap-fix-server",
+  "version": "1.0.0",
+  "description": "src/index.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "graphql": "^0.11.2",
+    "graphql-server-express": "^1.1.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.6.0",
+    "eslint-config-airbnb-base": "^11.3.2",
+    "eslint-plugin-import": "^2.7.0",
+    "nodemon": "^1.11.0"
+  },
+  "keywords": [],
+  "author": "Terry Tilley <terry@terrytilley.com>",
+  "license": "ISC"
+}
