@@ -7,6 +7,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      title: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      content: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       userId: {
         type: Sequelize.INTEGER,
         references: {
@@ -15,14 +23,6 @@ module.exports = {
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',
-      },
-      title: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      content: {
-        allowNull: false,
-        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

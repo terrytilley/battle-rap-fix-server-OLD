@@ -5,7 +5,9 @@ export default (sequelize, DataTypes) => {
   });
 
   Post.associate = (models) => {
-    Post.belongsTo(models.User);
+    Post.belongsTo(models.User, {
+      foreignKey: 'userId',
+    });
   };
 
   return Post;

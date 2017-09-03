@@ -1,37 +1,36 @@
 import {
   GraphQLInt,
-  GraphQLList,
   GraphQLString,
   GraphQLObjectType,
 } from 'graphql';
-import PostType from './post';
+import UserType from './user';
 
 export default new GraphQLObjectType({
-  name: 'User',
+  name: 'Post',
   fields: () => ({
     id: {
       type: GraphQLInt,
-      resolve: user => user.id,
+      resolve: post => post.id,
     },
-    email: {
+    title: {
       type: GraphQLString,
-      resolve: user => user.email,
+      resolve: post => post.title,
     },
-    username: {
+    content: {
       type: GraphQLString,
-      resolve: user => user.username,
+      resolve: post => post.content,
     },
-    posts: {
-      type: new GraphQLList(PostType),
-      resolve: user => user.getPosts(),
+    author: {
+      type: UserType,
+      resolve: post => post.getUser(),
     },
     createdAt: {
       type: GraphQLString,
-      resolve: user => user.createdAt,
+      resolve: post => post.createdAt,
     },
     updatedAt: {
       type: GraphQLString,
-      resolve: user => user.updatedAt,
+      resolve: post => post.updatedAt,
     },
   }),
 });

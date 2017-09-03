@@ -15,5 +15,5 @@ export const user = {
 
 export const users = {
   type: new GraphQLList(UserType),
-  resolve: (root, args, { models }) => models.User.findAll(),
+  resolve: (root, args, { models }) => models.User.findAll({ where: args }),
 };
