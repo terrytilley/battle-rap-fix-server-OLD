@@ -1,12 +1,13 @@
 const faker = require('faker');
 const times = require('lodash/times');
 
-const users = [];
+const posts = [];
 
-times(10, () => {
-  users.push({
-    username: faker.internet.userName().toLowerCase(),
-    email: faker.internet.email(),
+times(20, () => {
+  posts.push({
+    userId: Math.floor(Math.random() * 10) + 1,
+    title: faker.lorem.words(),
+    content: faker.lorem.sentence(),
     createdAt: faker.date.past().toISOString(),
     updatedAt: faker.date.recent().toISOString(),
   });
@@ -14,10 +15,10 @@ times(10, () => {
 
 module.exports = {
   up: queryInterface => (
-    queryInterface.bulkInsert('Users', users, {})
+    queryInterface.bulkInsert('Posts', posts, {})
   ),
 
   down: queryInterface => (
-    queryInterface.bulkDelete('Users', null, {})
+    queryInterface.bulkDelete('Posts', null, {})
   ),
 };
