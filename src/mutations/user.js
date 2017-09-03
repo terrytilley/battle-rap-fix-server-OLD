@@ -7,23 +7,25 @@ export const createUser = {
     email: { type: new GraphQLNonNull(GraphQLString) },
     username: { type: new GraphQLNonNull(GraphQLString) },
   },
-  resolve: (root, args, { models }) => models.User.create(args),
+  resolve: (root, { email, username }, { models }) =>
+    models.User.create({ email: email.toLowerCase(), username }),
 };
 
 export const editUser = {
   type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLInt))),
   args: {
-    username: { type: new GraphQLNonNull(GraphQLString) },
-    newUsername: { type: new GraphQLNonNull(GraphQLString) },
+    id: { type: new GraphQLNonNull(GraphQLInt) },
+    email: { type: GraphQLString },
+    username: { type: GraphQLString },
   },
-  resolve: (root, { username, newUsername }, { models }) =>
-    models.User.update({ username: newUsername }, { where: { username } }),
+  resolve: (root, { id, email, username }, { models }) =>
+    models.User.update({ email, username }, { where: { id } }),
 };
 
 export const deleteUser = {
   type: new GraphQLNonNull(GraphQLInt),
   args: {
-    username: { type: new GraphQLNonNull(GraphQLString) },
+    id: { type: new GraphQLNonNull(GraphQLInt) },
   },
   resolve: (root, args, { models }) =>
     models.User.destroy({ where: args }),
