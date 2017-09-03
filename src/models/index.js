@@ -7,6 +7,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 const db = {
   User: sequelize.import('./user'),
+  Post: sequelize.import('./post'),
 };
 
 Object.keys(db).forEach((modelName) => {

@@ -4,5 +4,11 @@ export default (sequelize, DataTypes) => {
     username: DataTypes.STRING,
   });
 
+  User.associate = (models) => {
+    User.hasMany(models.Post, {
+      foreignKey: 'userId',
+    });
+  };
+
   return User;
 };
