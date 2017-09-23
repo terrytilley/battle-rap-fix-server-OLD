@@ -7,13 +7,17 @@
     "start": "nodemon --exec babel-node src/index.js"
   },
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
+    "express-session": "^1.15.5",
     "faker": "^4.1.0",
     "graphql": "^0.11.2",
     "graphql-server-express": "^1.1.2",
     "lodash": "^4.17.4",
-    "pg": "^7.2.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "6.4.2",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.8.0"
   },
