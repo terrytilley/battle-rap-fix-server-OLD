@@ -18,17 +18,6 @@ app.use(session({
 app.use('/graphql', graphqlExpress({ schema, context: { models } }));
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-models.User
-  .findOrCreate({ where: { email: 'test@test.com' } })
-  .spread((user, created) => {
-    if (!created) { throw new Error('Email in use.'); }
-    // console.log('USER:', user.get({ plain: true }));
-    // console.log('CREATED:', created);
-
-    return user.get({ plain: true });
-  })
-  .then(user => console.log(user));
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');

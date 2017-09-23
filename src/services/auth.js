@@ -23,11 +23,11 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
   });
 }));
 
-function signup({ email, password, req }) {
+function signup({ email, username, password, req }) {
   if (!email || !password) { throw new Error('You must provide an email and password.'); }
 
   return User
-    .findOrCreate({ where: { email } })
+    .findOrCreate({ where: { email }, defaults: { username, password } })
     .spread((user, created) => {
       if (!created) { throw new Error('Email in use.'); }
       return user.get({ plain: true });
