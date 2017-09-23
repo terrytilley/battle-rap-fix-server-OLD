@@ -1,18 +1,18 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { User } from '../models';
+import models from '../models';
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findOne({ where: { id } })
+  models.User.findOne({ where: { id } })
     .then(user => done(null, user));
 });
 
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-  User.findOne({ email: email.toLowerCase() }, (err, user) => {
+  models.User.findOne({ email: email.toLowerCase() }, (err, user) => {
     if (err) { return done(err); }
     if (!user) { return done(null, false, 'Invalid Credentials'); }
     return user.comparePassword(password, (error, isMatch) => {
@@ -26,7 +26,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
 function signup({ email, username, password, req }) {
   if (!email || !password) { throw new Error('You must provide an email and password.'); }
 
-  return User
+  return models.User
     .findOrCreate({ where: { email }, defaults: { username, password } })
     .spread((user, created) => {
       if (!created) { throw new Error('Email in use.'); }
@@ -34,6 +34,7 @@ function signup({ email, username, password, req }) {
     })
     .then(user => (
       new Promise((resolve, reject) => {
+        console.log('req', req);
         req.login(user, (err) => {
           if (err) { reject(err); }
           resolve(user);

@@ -1,8 +1,8 @@
-import { createUser, editUser, deleteUser } from './user';
+import { signup, editUser, deleteUser } from './user';
 import { createPost, editPost, deletePost } from './post';
 
 export default {
-  createUser,
+  signup,
   createPost,
   editUser,
   editPost,

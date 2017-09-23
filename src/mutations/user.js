@@ -1,14 +1,17 @@
 import { GraphQLInt, GraphQLString, GraphQLList, GraphQLNonNull } from 'graphql';
+import models from '../models';
 import UserType from '../types/user';
+import AuthService from '../services/auth';
 
-export const createUser = {
+export const signup = {
   type: UserType,
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
     username: { type: new GraphQLNonNull(GraphQLString) },
+    password: { type: new GraphQLNonNull(GraphQLString) },
   },
-  resolve: (root, { email, username }, { models }) =>
-    models.User.create({ email: email.toLowerCase(), username }),
+  resolve: (root, { email, username, password }, req) =>
+    AuthService.signup({ email, username, password, req }),
 };
 
 export const editUser = {
@@ -18,7 +21,7 @@ export const editUser = {
     email: { type: GraphQLString },
     username: { type: GraphQLString },
   },
-  resolve: (root, { id, email, username }, { models }) =>
+  resolve: (root, { id, email, username }) =>
     models.User.update({ email, username }, { where: { id } }),
 };
 
@@ -27,6 +30,6 @@ export const deleteUser = {
   args: {
     id: { type: new GraphQLNonNull(GraphQLInt) },
   },
-  resolve: (root, args, { models }) =>
+  resolve: (root, args) =>
     models.User.destroy({ where: args }),
 };

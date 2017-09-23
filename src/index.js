@@ -1,9 +1,10 @@
 import express from 'express';
+import passport from 'passport';
 import bodyParser from 'body-parser';
 import session from 'express-session';
-import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
+import expressGraphQL from 'express-graphql';
 import schema from './schema';
-import models from './models';
+import './services/auth';
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -15,8 +16,13 @@ app.use(session({
   secret: 'aaabbbccc',
 }));
 
-app.use('/graphql', graphqlExpress({ schema, context: { models } }));
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/graphql', expressGraphQL({
+  schema,
+  graphiql: process.env.NODE_ENV !== 'production',
+}));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
