@@ -24,6 +24,15 @@ export const login = {
     AuthService.login({ email, password, req }),
 };
 
+export const logout = {
+  type: UserType,
+  resolve: (root, args, req) => {
+    const { user } = req;
+    req.logout();
+    return user;
+  },
+};
+
 export const editUser = {
   type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLInt))),
   args: {
