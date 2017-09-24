@@ -7,20 +7,24 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  models.User.findOne({ where: { id } })
+  models.User
+    .findOne({ where: { id } })
     .then(user => done(null, user));
 });
 
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-  models.User.findOne({ email: email.toLowerCase() }, (err, user) => {
-    if (err) { return done(err); }
-    if (!user) { return done(null, false, 'Invalid Credentials'); }
-    return user.comparePassword(password, (error, isMatch) => {
-      if (error) { return done(error); }
-      if (isMatch) { return done(null, user); }
-      return done(null, false, 'Invalid credentials.');
-    });
-  });
+  models.User
+    .findOne({ where: { email: email.toLowerCase() } })
+    .then((user) => {
+      if (!user) { return done(null, false, 'Invalid Credentials.'); }
+
+      return user.comparePassword(password, (error, isMatch) => {
+        if (error) { return done(error); }
+        if (isMatch) { return done(null, user); }
+        return done(null, false, 'Invalid Credentials.');
+      });
+    })
+    .catch(error => done(error));
 }));
 
 function signup({ email, username, password, req }) {
@@ -34,7 +38,6 @@ function signup({ email, username, password, req }) {
     })
     .then(user => (
       new Promise((resolve, reject) => {
-        console.log('req', req);
         req.login(user, (err) => {
           if (err) { reject(err); }
           resolve(user);

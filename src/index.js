@@ -6,6 +6,7 @@ import expressGraphQL from 'express-graphql';
 import schema from './schema';
 import './services/auth';
 
+const isProduction = process.env.NODE_ENV === 'production';
 const PORT = process.env.PORT || 8000;
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(passport.session());
 
 app.use('/graphql', expressGraphQL({
   schema,
-  graphiql: process.env.NODE_ENV !== 'production',
+  graphiql: !isProduction,
 }));
 
 // catch 404 and forward to error handler

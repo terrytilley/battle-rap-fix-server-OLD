@@ -14,6 +14,16 @@ export const signup = {
     AuthService.signup({ email, username, password, req }),
 };
 
+export const login = {
+  type: UserType,
+  args: {
+    email: { type: new GraphQLNonNull(GraphQLString) },
+    password: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  resolve: (root, { email, password }, req) =>
+    AuthService.login({ email, password, req }),
+};
+
 export const editUser = {
   type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLInt))),
   args: {
