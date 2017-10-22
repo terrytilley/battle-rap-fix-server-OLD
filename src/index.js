@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import passport from 'passport';
 import bodyParser from 'body-parser';
 import session from 'express-session';
@@ -10,20 +11,26 @@ const isProduction = process.env.NODE_ENV === 'production';
 const PORT = process.env.PORT || 8000;
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
-app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: 'aaabbbccc',
-}));
+app.use(
+  session({
+    resave: true,
+    saveUninitialized: true,
+    secret: 'aaabbbccc',
+  }),
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/graphql', expressGraphQL({
-  schema,
-  graphiql: !isProduction,
-}));
+app.use(
+  '/graphql',
+  expressGraphQL({
+    schema,
+    graphiql: !isProduction,
+  }),
+);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -38,7 +45,7 @@ app.use((err, req, res) => {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: (app.get('env') === 'development') ? err : {},
+    error: app.get('env') === 'development' ? err : {},
   });
 });
 
