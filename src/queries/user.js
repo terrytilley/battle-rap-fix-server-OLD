@@ -1,17 +1,12 @@
-import { GraphQLString, GraphQLList, GraphQLNonNull } from 'graphql';
+import { GraphQLList } from 'graphql';
 import models from '../models';
 import UserType from '../types/user';
 
 export const user = {
   type: UserType,
-  args: {
-    username: { type: new GraphQLNonNull(GraphQLString) },
+  resolve(root, args, req) {
+    return req.user;
   },
-  resolve: (root, { username }) => (
-    models.User.findOne({
-      where: { username },
-    })
-  ),
 };
 
 export const users = {
